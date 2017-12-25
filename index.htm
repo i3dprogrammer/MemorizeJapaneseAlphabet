@@ -1,6 +1,7 @@
 <html>
     <head>
         <meta charset="UTF-8"> 
+        <title>Train memorizing the Japanese Alphabet</title>
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
         <script src="./static/js/alphabet.js"></script>
         <script src="./static/js/combinations.js"></script>
@@ -12,7 +13,7 @@
         <div ng-show="startPage">
             <div class="jumbotron">
                 <div class="container">
-                    <h1>Click on any option to start learning!</h1>
+                    <h1>Click on any option to start training!</h1>
                 </div>
             </div>
             <div class="container app-selection">
@@ -20,12 +21,12 @@
                     <div class="col-md-6 selection-type" ng-click="startLearning('Hiragana')">
                         <img src="./static/imgs/box-hiragana.png" class="img-circle colored-background">
                         <h2>Hiragana</h2>
-                        <p>Start learning the romaji of Japanese Hiragana alphabet.</p>
+                        <p>Start training to memorize the romaji of Japanese Hiragana alphabet.</p>
                     </div>
                     <div class="col-md-6 selection-type" ng-click="startLearning('Katakana')">
                         <img src="./static/imgs/box-katakana.png" class="img-circle colored-background">
                         <h2>Katakana</h2>
-                        <p>Start learning the romaji of Japanese Katakana alphabet.</p>
+                        <p>Start training to memorize the romaji of Japanese Katakana alphabet.</p>
                     </div>
                 <!--     <div class="col-md-4 selection-type">
                         <img src="./static/imgs/box-both.png" class="img-circle colored-background">
@@ -34,12 +35,12 @@
                     </div> -->
                 </div>
                 <div class="row">
-                    <div class="col-md-6 selection-type">
+                    <div class="col-md-6 selection-type grey">
                         <img src="./static/imgs/box-hiragana.png" class="img-circle colored-background">
                         <h2>Hiragana Romaji</h2>
                         <p>Match the romaji to the correct Japanese Hiragana letter.</p>
                     </div>
-                    <div class="col-md-6 selection-type">
+                    <div class="col-md-6 selection-type grey">
                         <img src="./static/imgs/box-katakana.png" class="img-circle colored-background">
                         <h2>Katakana Romaji</h2>
                         <p>Match the romaji to the correct Japanese Katakana letter.</p>
