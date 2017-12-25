@@ -16,7 +16,7 @@
                     <h1>Click on any option to start training!</h1>
                 </div>
             </div>
-            <div class="container app-selection">
+            <div class="container app-selection"> <!-- Main page selection -->
                 <div class="row">
                     <div class="col-md-6 selection-type" ng-click="startLearning('Hiragana')">
                         <img src="./static/imgs/box-hiragana.png" class="img-circle colored-background">
@@ -28,19 +28,14 @@
                         <h2>Katakana</h2>
                         <p>Start training to memorize the romaji of Japanese Katakana alphabet.</p>
                     </div>
-                <!--     <div class="col-md-4 selection-type">
-                        <img src="./static/imgs/box-both.png" class="img-circle colored-background">
-                        <h2>Both</h2>
-                        <p>Start learning the romaji of Japanese Hiragana and Katakana alphabet.</p>
-                    </div> -->
                 </div>
                 <div class="row">
-                    <div class="col-md-6 selection-type grey">
+                    <div class="col-md-6 selection-type" ng-click="startLearning('Hiragana Romaji')">
                         <img src="./static/imgs/box-hiragana.png" class="img-circle colored-background">
                         <h2>Hiragana Romaji</h2>
                         <p>Match the romaji to the correct Japanese Hiragana letter.</p>
                     </div>
-                    <div class="col-md-6 selection-type grey">
+                    <div class="col-md-6 selection-type" ng-click="startLearning('Katakana Romaji')">
                         <img src="./static/imgs/box-katakana.png" class="img-circle colored-background">
                         <h2>Katakana Romaji</h2>
                         <p>Match the romaji to the correct Japanese Katakana letter.</p>
@@ -48,7 +43,7 @@
                 </div>
             </div>
         </div>
-        <div ng-hide="startPage">
+        <div ng-show="showAlphabetController" ng-controller="alphabetController">
             <div class="jumbotron">
                 <div class="container">
                     <dl>
@@ -83,6 +78,36 @@
                             <button class="btn btn-default" ng-show="showAnswer" ng-click="showAnswer=false">Hide Answer</button>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div ng-show="showRomajiController" ng-controller="romajiController">
+            <div class="jumbotron">
+                <div class="container">
+                    <dl>
+                        <dt><h1>{{trainingType}}</h1></dt>
+                        <dd><h3>Select the corresponding alphabet letter for the shown romaji.</h3></dd>
+                        <dd><h3>If there's more than one, you can select anyone.</h3></dd>
+                    </dl>
+                </div>
+            </div>
+            <div class="container app-selection">
+                <div class="alert alert-danger" ng-show="wrongAnswer">
+                    Wrong answer!
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4 letter">
+                        {{letter}}
+                        <p ng-show="showAnswer" class="answer">{{answer}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng-repeat="item in items">
+                        <div class="col-md-1 selection-letter" ng-click="checkAnswer($event)">{{item}}</div>
+                    </div>
+                </div>
+                <div class="row" style="padding:30px;">
+                    <button class="btn btn-default" ng-hide="showAnswer" ng-click="showAnswer=true">Show Answer</button>
                 </div>
             </div>
         </div>

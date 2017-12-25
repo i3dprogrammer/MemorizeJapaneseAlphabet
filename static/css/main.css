@@ -11,7 +11,7 @@ body {
     padding: 10px;
     padding-top: 30px;
     border-radius: 2px;
-    transition: box-shadow 0.5s, tansform 2s;
+    transition: box-shadow 0.5s;
 }
 .selection-type:hover {
     /*background: rgb(119, 119, 119); /* Fallback for browsers 
@@ -38,4 +38,17 @@ p {
 
 .grey {
     color: grey;
+}
+
+.selection-letter {
+    font-size: 30px;
+    cursor: pointer;
+    top: 0;
+    transition-property: box-shadow, top;
+    transition-duration: 0.2s, 0.2s;
+
+}
+.selection-letter:hover {
+    top: -5px;
+    box-shadow: 3px 3px 20px grey;
 }
