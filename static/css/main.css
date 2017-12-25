@@ -1,0 +1,37 @@
+body {
+    padding-top: 50px;
+}
+
+.colored-background {
+    background: rgb(119, 119, 119); /* Fallback for browsers */
+    background: rgba(119, 119, 119, 0.5);
+}
+
+.selection-type {
+    padding: 10px;
+    padding-top: 30px;
+    border-radius: 2px;
+    transition: box-shadow 0.5s, tansform 2s;
+}
+.selection-type:hover {
+    /*background: rgb(119, 119, 119); /* Fallback for browsers 
+    background: rgba(173, 173, 173, 0.5);*/
+    box-shadow: 3px 3px 20px grey;
+    cursor: pointer;
+}
+.app-selection {
+    text-align: center;
+}
+
+p {
+    font-size: 17px;
+}
+
+.letter {
+    font-size: 150px;
+}
+
+.answer {
+    color: grey;
+    padding-bottom: 30px;
+}

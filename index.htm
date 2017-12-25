@@ -2,17 +2,117 @@
     <head>
         <meta charset="UTF-8"> 
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
-        <script src=".static/js/alphabet.js"></script>
-        <script src=".static/js/combinations.js"></script>
+        <script src="./static/js/alphabet.js"></script>
+        <script src="./static/js/combinations.js"></script>
         <script>
             angular.module('app', []);
             var app = angular.module('app');
-            
+
+            app.value('letter', {index: 0}) //xD
+            app.controller('MainPageController', function($scope, letter){
+                $scope.userAnswer = '';
+                $scope.startPage = true;
+                $scope.showAnswer = false;
+                $scope.wrongAnswer = false;
+                $scope.startLearning = function(type){
+                    $scope.startPage = false;
+                    $scope.trainingType = type;
+                    $scope.newAnswer(type=='Hiragana');
+                };
+                $scope.checkAnswer = function(){
+                    if($scope.answer == $scope.userAnswer){
+                        if(++letter.index >= japaneseAlphabet.length)
+                            letter.index = 0;
+                        $scope.wrongAnswer = false;
+                        $scope.showAnswer = false;
+                        if($scope.trainingType == 'Hiragana')
+                            $scope.newAnswer(true);
+                        else
+                            $scope.newAnswer(false);
+                    } else {
+                        $scope.wrongAnswer = true;
+                    }
+                }
+                $scope.newAnswer = function(hiragana){
+                    if(hiragana === true)
+                        $scope.letter = japaneseAlphabet[letter.index].hiragana;
+                    else
+                        $scope.letter = japaneseAlphabet[letter.index].katakana;
+
+                    $scope.answer = japaneseAlphabet[letter.index].romaji;
+                }
+                $scope.checkKey = function(event){
+                    if(event.keyCode == 13)
+                        $scope.checkAnswer();
+                    else if(event.keyCode == 16)
+                        $scope.showAnswer = !$scope.showAnswer;
+                }
+            })
         </script>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="./static/css/main.css">
     </head>
-    <body ng-app="app">
-        <p style="font-size:100px;">
-            あ
-        </p>
+    <body ng-app="app" ng-controller="MainPageController">
+        <div ng-show="startPage">
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>Click on any option to start learning!</h1>
+                </div>
+            </div>
+            <div class="container app-selection">
+                <div class="row">
+                    <div class="col-md-4 selection-type" ng-click="startLearning('Hiragana')">
+                        <img src="./static/imgs/box-hiragana.png" class="img-circle colored-background">
+                        <h2>Hiragana</h2>
+                        <p>Start learning the romaji of Japanese Hiragana alphabet.</p>
+                    </div>
+                    <div class="col-md-4 selection-type" ng-click="startLearning('Katakana')">
+                        <img src="./static/imgs/box-katakana.png" class="img-circle colored-background">
+                        <h2>Katakana</h2>
+                        <p>Start learning the romaji of Japanese Katakana alphabet.</p>
+                    </div>
+                    <div class="col-md-4 selection-type">
+                        <img src="./static/imgs/box-both.png" class="img-circle colored-background">
+                        <h2>Both</h2>
+                        <p>Start learning the romaji of Japanese Hiragana and Katakana alphabet.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-hide="startPage">
+            <div class="jumbotron">
+                <div class="container">
+                    <h1>{{trainingType}}</h1>
+                </div>
+            </div>
+            <div class="container app-selection">
+                <div class="alert alert-danger" ng-show="wrongAnswer">
+                    Wrong answer!
+                </div>
+                <div class="row">
+                    <div class="col-md-offset-4 col-md-4 letter">
+                        {{letter}}
+                        <p ng-show="showAnswer" class="answer">{{answer}}</p>
+                    </div>
+                </div>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-md-2 control-label">
+                            Romaji
+                        </label>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control" ng-model="userAnswer" ng-keyup="checkKey($event)">
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-success" ng-click="checkAnswer()">Next</button>
+                        </div>
+                        <div class="col-md-1">
+                            <button class="btn btn-warning" ng-hide="showAnswer" ng-click="showAnswer=true">Show Answer</button>
+                            <button class="btn btn-warning" ng-show="showAnswer" ng-click="showAnswer=false">Hide Answer</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
