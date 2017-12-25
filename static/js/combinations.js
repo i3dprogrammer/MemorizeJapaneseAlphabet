@@ -1,4 +1,4 @@
-let japaneseCombinations = [
+var japaneseCombinations = [
     {
         hiragana:'きゃ',
 		katakana:'キャ',

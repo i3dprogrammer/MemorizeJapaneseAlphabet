@@ -1,4 +1,4 @@
-let japaneseAlphabet = [
+var japaneseAlphabet = [
     {
         hiragana:'あ',
 		katakana:'ア',
