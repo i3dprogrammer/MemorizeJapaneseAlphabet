@@ -1,5 +1,6 @@
 body {
     padding-top: 50px;
+    padding-bottom:50px;
 }
 
 .colored-background {
@@ -30,7 +31,10 @@ p {
 .letter {
     font-size: 150px;
 }
-
+.score {
+    font-size: 100px;
+    border-radius: 3px;
+}
 .answer {
     color: grey;
     padding-bottom: 30px;
@@ -44,6 +48,7 @@ p {
     font-size: 30px;
     cursor: pointer;
     top: 0;
+    border-radius: 3px;
     transition-property: box-shadow, top;
     transition-duration: 0.2s, 0.2s;
 
@@ -51,4 +56,9 @@ p {
 .selection-letter:hover {
     top: -5px;
     box-shadow: 3px 3px 20px grey;
+}
+
+#true {
+    top: -5px;
+    box-shadow: 1px 1px 10px rgb(102, 255, 0);
 }

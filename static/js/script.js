@@ -2,6 +2,7 @@ angular.module('app', []);
 var app = angular.module('app');
 
 app.value('letter', {index: 0}) //xD
+.value('score', {correct: 0, wrong: 0})
 .factory('shuffleArray', function(){
     return function(array){
         var currentIndex = array.length, temporaryValue, randomIndex;
@@ -21,27 +22,30 @@ app.value('letter', {index: 0}) //xD
 
         return array;
     }
-}).controller('MainPageController', function($scope, $rootScope, letter, shuffleArray){
+}).controller('MainPageController', function($scope, letter){
     $scope.startPage = true;
-    
+    $scope.japaneseAlphabet = japaneseAlphabet;
+
     $scope.startLearning = function(type){
+        letter.index = 0;
         $scope.startPage = false;
         $scope.trainingType = type;
-        console.log(type);
         if(!type.endsWith('omaji'))
             $scope.$broadcast('startAlphabetController', {hiragana: type=='Hiragana'});
         else{
             $scope.$broadcast('startRomajiController', {hiragana: type.startsWith('Hiragana')});
         }
     };
-}).controller('alphabetController', function($scope, letter, shuffleArray){
+}).controller('alphabetController', function($scope, letter, shuffleArray, score){
     $scope.showAlphabetController = false;
     $scope.showAnswer = false;
     $scope.wrongAnswer = false;
     $scope.userAnswer = '';
+    $scope.score = score;
     $scope.alphabet = shuffleArray(japaneseAlphabet.slice(0));
     $scope.checkAnswer = function(){
         if($scope.answer == $scope.userAnswer){
+            $scope.score.correct++;
             $scope.wrongAnswer = false;
             $scope.showAnswer = false;
             $scope.userAnswer = '';
@@ -55,7 +59,9 @@ app.value('letter', {index: 0}) //xD
             else
                 $scope.newQuestion(false);
         } else {
+            $scope.score.wrong++;
             $scope.wrongAnswer = true;
+            $scope.userAnswer = '';
         }
     };
     $scope.newQuestion = function(hiragana){
@@ -76,11 +82,24 @@ app.value('letter', {index: 0}) //xD
         $scope.newQuestion(data.hiragana);
         $scope.showAlphabetController = true;
     });
-}).controller('romajiController', function($scope, letter, shuffleArray){
+}).controller('romajiController', function($scope, letter, shuffleArray, score){ //Should probably combine both controllers into 1? not really sure how to design it correctly.
     $scope.showRomajiController = false;
     $scope.showAnswer = false;
     $scope.wrongAnswer = false;
     $scope.alphabet = shuffleArray(japaneseAlphabet.slice(0));
+    $scope.score = score;
+    $scope.showAnswerFn = function(){
+        $scope.items.forEach(function(item){
+            if(item.letter == $scope.answer)
+                item.selected = true;
+        });
+        $scope.showAnswer = true;
+    };
+    $scope.hideAnswers = function(){
+        $scope.items.forEach(function(item){
+            item.selected = false;
+        });
+    }
     $scope.newQuestion = function(hiragana){
         if(hiragana === true)
             $scope.answer = $scope.alphabet[letter.index].hiragana;
@@ -91,6 +110,8 @@ app.value('letter', {index: 0}) //xD
     };
     $scope.checkAnswer = function(event){
         if($scope.answer == event.target.innerText){
+            $scope.hideAnswers();
+            $scope.score.correct++;
             $scope.wrongAnswer = false;
             $scope.showAnswer = false;
             if(++letter.index >= $scope.alphabet.length)
@@ -103,6 +124,7 @@ app.value('letter', {index: 0}) //xD
             else
                 $scope.newQuestion(false);
         } else {
+            $scope.score.wrong++;
             $scope.wrongAnswer = true;
         }
     };
@@ -110,10 +132,15 @@ app.value('letter', {index: 0}) //xD
         $scope.newQuestion(data.hiragana);
         $scope.items = japaneseAlphabet.slice(0).map(function(x){
             if($scope.trainingType.startsWith('Hiragana'))
-                return x.hiragana;
+                return {letter: x.hiragana, selected: false};
             else
-                return x.katakana;
+                return {letter: x.katakana, selected: false};
         });
         $scope.showRomajiController = true;
     });
+}).controller('cheatSheetController', function($scope){
+    $scope.showCheatSheet = false;
+    $scope.$on('startCheatSheetController', function(event, data){
+        $scope.showCheatSheet = true;
+    })
 });

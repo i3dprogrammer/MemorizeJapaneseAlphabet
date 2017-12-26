@@ -42,8 +42,16 @@
                     </div>
                 </div>
             </div>
+            <div class="container app-selection" ng-show="false"> <!-- Cheat sheet -->
+                <h2>Japanese Alphabet Cheat Sheet</h2>
+                <div class="col-md-2 selection-letter" ng-repeat="alphabet in japaneseAlphabet">
+                    <span ng-bind="alphabet.hiragana"></span>
+                    <span ng-bind="alphabet.katakana"></span>
+                    <p ng-bind="alphabet.romaji"></p>
+                </div>
+            </div>
         </div>
-        <div ng-show="showAlphabetController" ng-controller="alphabetController">
+        <div ng-show="showAlphabetController" ng-controller="alphabetController"> <!-- Hiragana / Katakana Training -->
             <div class="jumbotron">
                 <div class="container">
                     <dl>
@@ -57,9 +65,15 @@
                     Wrong answer!
                 </div>
                 <div class="row">
-                    <div class="col-md-offset-4 col-md-4 letter">
+                    <div class="col-md-4 score alert-success">
+                        {{score.correct}}
+                    </div>
+                    <div class="col-md-4 letter">
                         {{letter}}
                         <p ng-show="showAnswer" class="answer">{{answer}}</p>
+                    </div>
+                    <div class="col-md-4 score alert-danger">
+                        {{score.wrong}}
                     </div>
                 </div>
                 <div class="form-horizontal">
@@ -81,7 +95,7 @@
                 </div>
             </div>
         </div>
-        <div ng-show="showRomajiController" ng-controller="romajiController">
+        <div ng-show="showRomajiController" ng-controller="romajiController"> <!-- Romaji Training -->
             <div class="jumbotron">
                 <div class="container">
                     <dl>
@@ -96,18 +110,25 @@
                     Wrong answer!
                 </div>
                 <div class="row">
-                    <div class="col-md-offset-4 col-md-4 letter">
+                    <div class="col-md-4 score alert-success">
+                        {{score.correct}}
+                    </div>
+                    <div class="col-md-4 letter">
                         {{letter}}
-                        <p ng-show="showAnswer" class="answer">{{answer}}</p>
+                    </div>
+                    <div class="col-md-4 score alert-danger">
+                        {{score.wrong}}
                     </div>
                 </div>
                 <div class="row">
                     <div ng-repeat="item in items">
-                        <div class="col-md-1 selection-letter" ng-click="checkAnswer($event)">{{item}}</div>
+                        <div class="col-md-1 selection-letter" ng-click="checkAnswer($event)" id="{{item.selected}}">
+                            {{item.letter}}
+                        </div>
                     </div>
                 </div>
-                <div class="row" style="padding:30px;">
-                    <button class="btn btn-default" ng-hide="showAnswer" ng-click="showAnswer=true">Show Answer</button>
+                <div class="row" style="padding-top:30px;">
+                    <button class="btn btn-default" ng-hide="showAnswer" ng-click="showAnswerFn()">Show Answer</button>
                 </div>
             </div>
         </div>
