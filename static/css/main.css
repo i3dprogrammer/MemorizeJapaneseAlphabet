@@ -1,6 +1,10 @@
 body {
-    padding-top: 50px;
-    padding-bottom:50px;
+    /* padding-top: 5px; */
+    /* padding-bottom:50px; */
+}
+
+.jumbotron {
+    padding: 40px;
 }
 
 .colored-background {
@@ -56,6 +60,11 @@ p {
 .selection-letter:hover {
     top: -5px;
     box-shadow: 3px 3px 20px grey;
+}
+
+.pad {
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 
 #true {
